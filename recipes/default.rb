@@ -19,4 +19,22 @@ package "selinux-policy" do
   action [:upgrade]
 end
 
+script "enable mkhomedir" do
+  interpreter "bash"
+  user "root"
+  group "root"
+  cwd "/tmp"
+  code <<-EOH
+    authconfig --enablemkhomedir --update
+  EOH
+end
+
 include_recipe "freeipa"
+
+service "sssd" do
+  action :start
+end
+
+service "oddjobd" do
+  action [ :enable, :start]
+end
