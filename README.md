@@ -1,4 +1,4 @@
 # freeipa
 
-Cookbook to setup FreeIPA
+Wrapper cookbook to setup FreeIPA @ FC
 
