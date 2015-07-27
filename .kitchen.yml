@@ -14,7 +14,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[freeipa::default]
+      - recipe[fc-freeipa::default]
     attributes:
       freeipa:
         hostname: ipa.example.com
