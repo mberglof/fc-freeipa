@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.hostname = "freeipa-01"
+  config.vm.hostname = "ipa.example.com"
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "~/vagrant_boxes/opscode_centos-6.5_chef-provisionerless.box"
 
@@ -127,7 +127,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #  chef.validation_key_path = "ORGNAME-validator.pem"
     chef.node_name = config.vm.hostname
     chef.run_list = [
-      "recipe[freeipa::default]"
+      "recipe[fc-freeipa::default]"
     ]
   end
   #
