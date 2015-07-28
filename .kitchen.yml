@@ -18,3 +18,4 @@ suites:
     attributes:
       freeipa:
         hostname: ipa.example.com
+        ipa_admin_password: ipa_admin_password
