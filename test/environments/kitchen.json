@@ -1,0 +1,21 @@
+{
+  "name": "kitchen",
+  "description": "Chef kitchen environment",
+  "cookbook_versions": {
+
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "freeipa": {
+      "ipa_admin_password": "ipa_admin_password",
+      "hostname": "ipa.example.com",
+      "domain": "example.com",
+      "dir_manager_password": "dir_manager_password",
+      "realm_name": "EXAMPLE.COM"
+    }
+  }
+}
