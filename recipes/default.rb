@@ -5,12 +5,11 @@
 # Copyright (c) 2014 The Authors, All Rights Reserved.
 #
 
-#node.set["hostfile"]
-#node.set["freeipa"]["ipa_admin_password"] = "ipa_admin_passwordadmin"
-#node.set["freeipa"]["hostname"] = "localhost.localdomain"
-#node.set["freeipa"]["domain"] = "localdomain"
-#node.set["freeipa"]["dir_manager_password"] = "dir_manager_password"
-#node.set["freeipa"]["realm_name"] = "LOCALDOMAIN"
+node.set["freeipa"]["ipa_admin_password"] = "ipa_admin_password"
+node.set["freeipa"]["hostname"] = "ipa.fcuat.co.uk"
+node.set["freeipa"]["domain"] = "fcuat.co.uk"
+node.set["freeipa"]["dir_manager_password"] = "dir_manager_password"
+node.set["freeipa"]["realm_name"] = "FCUAT.CO.UK"
 
 package "selinux-policy" do
   retries 3
