@@ -150,7 +150,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # roles and environments.  
   config.chef_zero.chef_repo_path = "~/chef-repo/"
 
-  config.vm.provision "chef_client" do |chef|
+  config.vm.provision "chef_solo" do |chef|
   #  chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
   #  chef.validation_key_path = "ORGNAME-validator.pem"
     chef.node_name = config.vm.hostname
