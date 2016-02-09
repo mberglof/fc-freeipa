@@ -7,7 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 domain = 'example.com'
 
 ipa_nodes = [
-  {:hostname => 'ipa',  :ip => '172.16.32.10', :box => 'opscode-centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 768},
+  {:hostname => 'ipa',  :ip => '172.16.32.10', :box => 'opscode-centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 1024},
   {:hostname => 'client', :ip => '172.16.32.11', :box => 'opscode-centos-7.1'},
 ]
 
@@ -144,10 +144,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Set the version of Chef you want to use.  The omnibus plug in will
   # ensure you get the version you want installed as Vagrant spins up 
   # the machine
-  config.omnibus.chef_version = '11.18.6'
+  config.omnibus.chef_version = '12.4.1'
 
   # Chef Zero path to chef server objects.  These are things like data bags,
-  # roles and environments.  
+  # roles and environments.
   config.chef_zero.chef_repo_path = "~/chef-repo/"
 
   config.vm.provision "chef_solo" do |chef|
