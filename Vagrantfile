@@ -4,14 +4,42 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+domain = 'example.com'
+
+ipa_nodes = [
+  {:hostname => 'ipa',  :ip => '172.16.32.10', :box => 'opscode-centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 768},
+  {:hostname => 'client', :ip => '172.16.32.11', :box => 'opscode-centos-7.1'},
+]
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  ipa_nodes.each do |node|
+    config.vm.define node[:hostname] do |node_config|
+      node_config.vm.box = node[:box]
+      #node_config.vm.box_url = 'http://files.vagrantup.com/' + node_config.vm.box + '.box'
+      node_config.vm.hostname = node[:hostname] + '.' + domain
+      node_config.vm.network :private_network, ip: node[:ip]
+
+      if node[:fwdhost]
+        node_config.vm.network :forwarded_port, guest: node[:fwdguest], host: node[:fwdhost]
+      end
+
+      memory = node[:ram] ? node[:ram] : 256;
+      node_config.vm.provider :virtualbox do |vb|
+        vb.customize [
+          'modifyvm', :id,
+          '--name', node[:hostname],
+          '--memory', memory.to_s
+        ]
+      end
+    end
+  end
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.hostname = "ipa.example.com"
+  #config.vm.hostname = "ipa.example.com"
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "~/vagrant_boxes/opscode_centos-6.5_chef-provisionerless.box"
+  #config.vm.box = "opscode-centos-7.1"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -21,11 +49,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 25, host: 2525
+  #config.vm.network "forwarded_port", guest: 25, host: 2525
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
+  #config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
