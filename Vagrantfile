@@ -100,25 +100,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   chef.json = { mysql_password: "foo" }
   # end
 
-  # Enable provisioning with chef server, specifying the chef server URL,
-  # and the path to the validation key (relative to this Vagrantfile).
-  #
-  # The Opscode Platform uses HTTPS. Substitute your organization for
-  # ORGNAME in the URL and validation key.
-  #
-  # If you have your own Chef Server, use the appropriate URL, which may be
-  # HTTP instead of HTTPS depending on your configuration. Also change the
-  # validation key to validation.pem.
-  #
-
-  # When Vagrant spins up a machine, it will also load your cookbook 
+  # When Vagrant spins up a machine, it will also load your cookbook
   # dependencies via Berkshelf
   config.berkshelf.enabled = true
 
   # Set the version of Chef you want to use.  The omnibus plug in will
-  # ensure you get the version you want installed as Vagrant spins up 
+  # ensure you get the version you want installed as Vagrant spins up
   # the machine
-  config.omnibus.chef_version = '12.4.1'
+  if Vagrant.has_plugin?("vagrant-omnibus")
+    config.omnibus.chef_version = '12.4.1'
+  end
 
   # Chef Zero path to chef server objects.  These are things like data bags,
   # roles and environments.
