@@ -5,12 +5,6 @@
 # Copyright (c) 2014 The Authors, All Rights Reserved.
 #
 
-#node.set["freeipa"]["ipa_admin_password"] = "ipa_admin_password"
-#node.set["freeipa"]["hostname"] = "ipa.fcuat.co.uk"
-#node.set["freeipa"]["domain"] = "fcuat.co.uk"
-#node.set["freeipa"]["dir_manager_password"] = "dir_manager_password"
-#node.set["freeipa"]["realm_name"] = "FCUAT.CO.UK"
-
 package "selinux-policy" do
   retries 3
   timeout 1800
