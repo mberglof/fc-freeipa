@@ -119,8 +119,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #  chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
   #  chef.validation_key_path = "ORGNAME-validator.pem"
     chef.node_name = config.vm.hostname
+    #chef.cookbooks_path = "../my-recipes/cookbooks"
+    chef.roles_path = "./roles"
+    chef.data_bags_path = "./data_bags"
+    chef.nodes_path = "./nodes"
+
     chef.run_list = [
-      "recipe[fc-freeipa::default]"
+      #"recipe[fc-freeipa::vagrant]"
     ]
   end
   #
