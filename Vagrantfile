@@ -125,7 +125,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.nodes_path = "./nodes"
 
     chef.run_list = [
-      #"recipe[fc-freeipa::vagrant]"
+      "recipe[fc-freeipa::default]"
     ]
   end
   #
