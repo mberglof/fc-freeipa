@@ -2,10 +2,16 @@
 driver:
   name: vagrant
   vm_hostname: ipa.example.com
+  customize:
+    memory: 1024
+    cpus: 2
 
 provisioner:
   name: chef_solo
   require_chef_omnibus: 12.4.1
+  environments_path: test/environments
+  solo_rb:
+    environment: kitchen
 
 platforms:
   #  - name: ubuntu-12.04
@@ -17,6 +23,3 @@ suites:
     run_list:
       - recipe[fc-freeipa::default]
     attributes:
-      freeipa:
-        hostname: ipa.example.com
-        ipa_admin_password: ipa_admin_password

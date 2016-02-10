@@ -4,14 +4,42 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+domain = 'example.com'
+
+ipa_nodes = [
+  {:hostname => 'server',  :ip => '172.16.32.10', :box => 'opscode-centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 1024},
+  {:hostname => 'client', :ip => '172.16.32.11', :box => 'opscode-centos-7.1'},
+]
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  ipa_nodes.each do |node|
+    config.vm.define node[:hostname] do |node_config|
+      node_config.vm.box = node[:box]
+      #node_config.vm.box_url = 'http://files.vagrantup.com/' + node_config.vm.box + '.box'
+      node_config.vm.hostname = node[:hostname] + '.' + domain
+      node_config.vm.network :private_network, ip: node[:ip]
+
+      if node[:fwdhost]
+        node_config.vm.network :forwarded_port, guest: node[:fwdguest], host: node[:fwdhost]
+      end
+
+      memory = node[:ram] ? node[:ram] : 256;
+      node_config.vm.provider :virtualbox do |vb|
+        vb.customize [
+          'modifyvm', :id,
+          '--name', node[:hostname],
+          '--memory', memory.to_s
+        ]
+      end
+    end
+  end
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.hostname = "ipa.example.com"
+  #config.vm.hostname = "ipa.example.com"
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "~/vagrant_boxes/opscode_centos-6.5_chef-provisionerless.box"
+  #config.vm.box = "opscode-centos-7.1"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -21,11 +49,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 25, host: 2525
+  #config.vm.network "forwarded_port", guest: 25, host: 2525
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
+  #config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -57,32 +85,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  # Enable provisioning with CFEngine. CFEngine Community packages are
-  # automatically installed. For example, configure the host as a
-  # policy server and optionally a policy file to run:
-  #
-  # config.vm.provision "cfengine" do |cf|
-  #   cf.am_policy_hub = true
-  #   # cf.run_file = "motd.cf"
-  # end
-  #
-  # You can also configure and bootstrap a client to an existing
-  # policy server:
-  #
-  # config.vm.provision "cfengine" do |cf|
-  #   cf.policy_server_address = "10.0.2.15"
-  # end
-
-  # Enable provisioning with Puppet stand alone.  Puppet manifests
-  # are contained in a directory path relative to this Vagrantfile.
-  # You will need to create the manifests directory and a manifest in
-  # the file default.pp in the manifests_path directory.
-  #
-  # config.vm.provision "puppet" do |puppet|
-  #   puppet.manifests_path = "manifests"
-  #   puppet.manifest_file  = "site.pp"
-  # end
-
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
@@ -98,34 +100,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   chef.json = { mysql_password: "foo" }
   # end
 
-  # Enable provisioning with chef server, specifying the chef server URL,
-  # and the path to the validation key (relative to this Vagrantfile).
-  #
-  # The Opscode Platform uses HTTPS. Substitute your organization for
-  # ORGNAME in the URL and validation key.
-  #
-  # If you have your own Chef Server, use the appropriate URL, which may be
-  # HTTP instead of HTTPS depending on your configuration. Also change the
-  # validation key to validation.pem.
-  #
-
-  # When Vagrant spins up a machine, it will also load your cookbook 
+  # When Vagrant spins up a machine, it will also load your cookbook
   # dependencies via Berkshelf
   config.berkshelf.enabled = true
 
   # Set the version of Chef you want to use.  The omnibus plug in will
-  # ensure you get the version you want installed as Vagrant spins up 
+  # ensure you get the version you want installed as Vagrant spins up
   # the machine
-  config.omnibus.chef_version = '11.18.6'
+  if Vagrant.has_plugin?("vagrant-omnibus")
+    config.omnibus.chef_version = '12.4.1'
+  end
 
   # Chef Zero path to chef server objects.  These are things like data bags,
-  # roles and environments.  
+  # roles and environments.
   config.chef_zero.chef_repo_path = "~/chef-repo/"
 
-  config.vm.provision "chef_client" do |chef|
+  config.vm.provision "chef_solo" do |chef|
   #  chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
   #  chef.validation_key_path = "ORGNAME-validator.pem"
     chef.node_name = config.vm.hostname
+    #chef.cookbooks_path = "../my-recipes/cookbooks"
+    chef.roles_path = "./roles"
+    chef.data_bags_path = "./data_bags"
+    chef.nodes_path = "./nodes"
+
     chef.run_list = [
       "recipe[fc-freeipa::default]"
     ]
