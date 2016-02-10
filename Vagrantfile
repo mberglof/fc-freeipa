@@ -7,7 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 domain = 'example.com'
 
 ipa_nodes = [
-  {:hostname => 'ipa',  :ip => '172.16.32.10', :box => 'opscode-centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 1024},
+  {:hostname => 'server',  :ip => '172.16.32.10', :box => 'opscode-centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 1024},
   {:hostname => 'client', :ip => '172.16.32.11', :box => 'opscode-centos-7.1'},
 ]
 
