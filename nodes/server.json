@@ -1,0 +1,8 @@
+{
+  "run_list": [
+	"recipe[fc-freeipa::default]"
+  ],
+  "automatic": {
+    "ipaddress": "server"
+  }
+}

@@ -7,8 +7,8 @@ VAGRANTFILE_API_VERSION = "2"
 domain = 'example.com'
 
 ipa_nodes = [
-  {:hostname => 'server',  :ip => '172.16.32.10', :box => 'opscode-centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 1024},
-  {:hostname => 'client', :ip => '172.16.32.11', :box => 'opscode-centos-7.1'},
+  {:hostname => 'server',  :ip => '172.16.32.10', :box => 'bento/centos-7.1', :fwdhost => 8443, :fwdguest => 443, :ram => 1024},
+  {:hostname => 'client', :ip => '172.16.32.11', :box => 'bento/centos-7.1'},
 ]
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -113,7 +113,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Chef Zero path to chef server objects.  These are things like data bags,
   # roles and environments.
-  config.chef_zero.chef_repo_path = "~/chef-repo/"
+  #config.chef_zero.chef_repo_path = "~/chef-repo/"
 
   config.vm.provision "chef_solo" do |chef|
   #  chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
@@ -122,7 +122,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #chef.cookbooks_path = "../my-recipes/cookbooks"
     chef.roles_path = "./roles"
     chef.data_bags_path = "./data_bags"
-    chef.nodes_path = "./nodes"
+    #chef.nodes_path = "./nodes"
 
     chef.run_list = [
       "recipe[fc-freeipa::default]"

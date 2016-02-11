@@ -1,0 +1,8 @@
+{
+  "run_list": [
+  	"recipe[fc-freeipa::server]"
+  ],
+  "automatic": {
+    "ipaddress": "server.fundingcircle.co.uk"
+  }
+}
