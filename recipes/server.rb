@@ -22,7 +22,7 @@ script "enable mkhomedir" do
   EOH
 end
 
-include_recipe "fc-freeipa::freeipa-install"
+include_recipe 'fc-freeipa::freeipa' unless ::File.exist?("/etc/httpd/conf.d")
 
 service "sssd" do
   action :start
