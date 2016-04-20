@@ -1,28 +1,40 @@
 #
 # Cookbook Name:: fc-freeipa
-# Recipe:: default
-#
-# Copyright (c) 2014 The Authors, All Rights Reserved.
+# Recipe:: server
 #
 
-package "selinux-policy" do
-  retries 3
-  timeout 1800
-  retry_delay 10
-  action [:upgrade]
-end
+ipa_admin_password = node["freeipa"]["ipa_admin_password"]
+hostname = node["freeipa"]["hostname"]
+domain = node["freeipa"]["domain"] 
+dir_manager_password = node["freeipa"]["dir_manager_password"] 
+realm_name = node["freeipa"]["realm_name"]
 
 script "enable mkhomedir" do
   interpreter "bash"
-  user "root"
-  group "root"
   cwd "/tmp"
   code <<-EOH
     authconfig --enablemkhomedir --update
   EOH
 end
 
-include_recipe 'fc-freeipa::freeipa' unless ::File.exist?("/etc/httpd/conf.d")
+hostsfile_entry node["freeipa"]["ipaddress"] do
+  hostname  node["fqdn"]
+  comment   'added by freeipa server recipe'
+  action    :append
+end
+
+package "ipa-server" do
+  action [:install]
+end
+
+script "install freeipa server" do
+  interpreter "bash"
+  cwd "/tmp"
+  code <<-EOH
+  ipa-server-install -U --no-host-dns -a #{ipa_admin_password} --hostname=#{hostname} -n #{domain} -p #{dir_manager_password} -r #{realm_name}
+  EOH
+  not_if "ipa-server-install 2>&1 | grep 'IPA server is already configured on this system.'"
+end
 
 service "sssd" do
   action :start

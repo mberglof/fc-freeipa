@@ -6,4 +6,5 @@ description      'Installs/Configures freeipa'
 long_description 'Installs/Configures freeipa'
 version          '0.0.1'
 
-depends "freeipa"
+depends "hostsfile"
+depends "ntp"

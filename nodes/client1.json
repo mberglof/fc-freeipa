@@ -1,8 +1,9 @@
 {
   "run_list": [
+  	"recipe[ntp]",
   	"recipe[fc-freeipa::client]"
   ],
   "automatic": {
-    "ipaddress": "client"
+    "ipaddress": "client1"
   }
 }
