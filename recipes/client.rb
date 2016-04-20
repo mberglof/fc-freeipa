@@ -3,25 +3,25 @@
 # Recipe:: client
 #
 
-dir_manager_password = node["freeipa"]["dir_manager_password"] 
-domain = node["freeipa"]["domain"]
-server = node["freeipa"]["server"]
-realm_name = node["freeipa"]["realm_name"]
+dir_manager_password = node['freeipa']['dir_manager_password']
+domain = node['freeipa']['domain']
+server = node['freeipa']['server']
+realm_name = node['freeipa']['realm_name']
 
-hostsfile_entry node["freeipa"]["ipaddress"] do
-  hostname  node["freeipa"]["server"]
+hostsfile_entry node['freeipa']['ipaddress'] do
+  hostname  node['freeipa']['server']
   comment   'added by freeipa server recipe'
   action    :append
 end
 
-yum_package "ipa-client"
+package 'ipa-client'
 
-script "install freeipa" do
-  interpreter "bash"
-  cwd "/tmp"
+script 'install freeipa' do
+  interpreter 'bash'
+  cwd '/tmp'
   code <<-EOH
   ipa-client-install \
-  	--server=server1.example.com \
+  	--server=#{server} \
   	--domain #{domain}  \
   	--realm #{realm_name} \
   	--password #{dir_manager_password} \

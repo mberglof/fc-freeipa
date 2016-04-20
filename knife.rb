@@ -1,1 +1,1 @@
-cookbook_path [ './']
+cookbook_path ['./']
