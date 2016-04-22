@@ -1,2 +1,12 @@
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
 Metrics/LineLength:
-   Max: 180
+  Max: 120
+Metrics/MethodLength:
+  Max: 12
+Style/FileName:
+  Enabled: false

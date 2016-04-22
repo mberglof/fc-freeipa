@@ -25,3 +25,8 @@
   ipa user-del tbats
   [ "$?" -eq 0 ]
 }
+
+@test "ipa admin can add user for client test" {
+  ipa user-add client --first=Test --last=Client --shell=/bin/bash --cn="Test Client" --random
+  [ "$?" -eq 0 ]
+}

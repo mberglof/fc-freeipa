@@ -1,0 +1,141 @@
+{
+  "revision_id": "97ed64238e266b8626841ae47d8c8feb2ca7f5d14b0e8d8d8d6b85a2d10bc289",
+  "name": "fc-freeipa",
+  "run_list": [
+    "recipe[fc-freeipa::default]"
+  ],
+  "named_run_lists": {
+    "fc-freeipa-server": [
+      "recipe[fc-freeipa::server]"
+    ],
+    "fc-freeipa-client": [
+      "recipe[fc-freeipa::client]"
+    ]
+  },
+  "cookbook_locks": {
+    "fc-freeipa": {
+      "version": "0.0.1",
+      "identifier": "419d9ccbe6d7ea6cf240e0cfc5cf0bed72bfbd84",
+      "dotted_decimal_identifier": "18469170247555050.30665657948292559.13114460323204",
+      "source": ".",
+      "cache_key": null,
+      "scm_info": {
+        "scm": "git",
+        "remote": null,
+        "revision": "fd7873866a6514347448441db60496f3096f46d1",
+        "working_tree_clean": false,
+        "published": true,
+        "synchronized_remote_branches": [
+          "origin/gg-freeipa"
+        ]
+      },
+      "source_options": {
+        "path": "."
+      }
+    },
+    "hostsfile": {
+      "version": "2.4.5",
+      "identifier": "15e126e37ecaa1d39c549ae001f2a4a12a1844fa",
+      "dotted_decimal_identifier": "6158531652668065.59563107275506162.181012102923514",
+      "cache_key": "hostsfile-2.4.5-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/hostsfile/versions/2.4.5/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/hostsfile/versions/2.4.5/download",
+        "version": "2.4.5"
+      }
+    },
+    "ntp": {
+      "version": "1.11.0",
+      "identifier": "bdf74adfa862527a0fd899c9c4dd710ee7231bcc",
+      "dotted_decimal_identifier": "53470671550308946.34357370126189789.124308821318604",
+      "cache_key": "ntp-1.11.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/ntp/versions/1.11.0/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/ntp/versions/1.11.0/download",
+        "version": "1.11.0"
+      }
+    },
+    "windows": {
+      "version": "1.39.2",
+      "identifier": "2ec00afd1b7f1110991142aec4b94d5dc2466963",
+      "dotted_decimal_identifier": "13159002357333777.4671899039614137.85065086691683",
+      "cache_key": "windows-1.39.2-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/windows/versions/1.39.2/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/windows/versions/1.39.2/download",
+        "version": "1.39.2"
+      }
+    },
+    "chef_handler": {
+      "version": "1.3.0",
+      "identifier": "e43505a45df303a94934a1d3eb4cf0709d172554",
+      "dotted_decimal_identifier": "64234593038758659.47649761466248012.264366462543188",
+      "cache_key": "chef_handler-1.3.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/chef_handler/versions/1.3.0/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/chef_handler/versions/1.3.0/download",
+        "version": "1.3.0"
+      }
+    }
+  },
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+
+  },
+  "solution_dependencies": {
+    "Policyfile": [
+      [
+        "fc-freeipa",
+        ">= 0.0.0"
+      ],
+      [
+        "hostsfile",
+        "= 2.4.5"
+      ],
+      [
+        "ntp",
+        "= 1.11.0"
+      ],
+      [
+        "windows",
+        "= 1.39.2"
+      ],
+      [
+        "chef_handler",
+        "= 1.3.0"
+      ]
+    ],
+    "dependencies": {
+      "hostsfile (2.4.5)": [
+
+      ],
+      "ntp (1.11.0)": [
+        [
+          "windows",
+          ">= 1.38.0"
+        ]
+      ],
+      "windows (1.39.2)": [
+        [
+          "chef_handler",
+          ">= 0.0.0"
+        ]
+      ],
+      "chef_handler (1.3.0)": [
+
+      ],
+      "fc-freeipa (0.0.1)": [
+        [
+          "hostsfile",
+          ">= 0.0.0"
+        ],
+        [
+          "ntp",
+          ">= 0.0.0"
+        ]
+      ]
+    }
+  }
+}

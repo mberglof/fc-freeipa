@@ -1,12 +1,13 @@
-name             'fc-freeipa'
-maintainer       'Marcus Berglof'
-maintainer_email 'chef.cookbook@infra.fulhack.se'
-issues_url		 'https://github.com/fundingcircle/fc-freeipa/issues'
-source_url		 'https://github.com/fundingcircle/fc-freeipa'
-license          'BSD 3'
-description      'Installs/Configures freeipa'
-long_description 'Installs/Configures freeipa'
-version          '0.0.1'
+name             "fc-freeipa"
+maintainer       "Marcus Berglof"
+maintainer_email "chef.cookbook@infra.fulhack.se"
+issues_url		   "https://github.com/fundingcircle/fc-freeipa/issues"
+source_url		   "https://github.com/fundingcircle/fc-freeipa"
+license          "BSD 3"
+description      "Installs/Configures freeipa"
+long_description "Installs/Configures freeipa"
+version          "0.0.1"
 
-depends 'hostsfile'
-depends 'ntp'
+depends "hostsfile"
+depends "ntp"
+depends "entropy"

@@ -1,25 +1,48 @@
 ---
 driver:
   name: vagrant
-  vm_hostname: ipa.example.com
-  customize:
-    memory: 1024
-    cpus: 2
 
 provisioner:
-  name: chef_solo
-  require_chef_omnibus: 12.4.1
-  environments_path: test/environments
-  solo_rb:
-    environment: kitchen
+  name: chef_zero 
+  require_chef_omnibus: 12.9.38
 
 platforms:
-  #  - name: ubuntu-12.04
-   - name: centos-6.5
-   - name: centos-7.1
+  - name: centos-7.1
 
 suites:
-  - name: default
-    run_list:
-      - recipe[fc-freeipa::default]
+  - name: server
+    run_list: "fc-freeipa::server"
+    driver:
+      vm_hostname: server.example.com
+      network:
+      - ["private_network", {ip: "192.168.222.2"}]
+      customize:
+        memory: 1024
+        cpus: 2
+    data_bags_path: "test/integration/data_bags" 
+    encrypted_data_bag_secret_key_path: "test/integration/data_bags/encrypted_data_bag_secret"
     attributes:
+      vagrant_ip: "192.168.222.2"
+      freeipa:
+        ipa_admin_password: "ipa_admin_password"
+        server: 
+          hostname: "server.example.com"
+        replica:
+          hostname: "replica.example.com"
+          ipaddress: "192.168.222.3"
+  - name: client 
+    run_list: "fc-freeipa::client"
+    policyfile: "test/policies/client.rb"
+    driver:
+      vm_hostname: client.example.com
+      network:
+      - ["private_network", {ip: "192.168.222.4"}]
+      customize:
+        memory: 1024
+        cpus: 2
+    attributes:
+      vagrant_ip: "192.168.222.2"
+      freeipa:
+        ipa_admin_password: "ipa_admin_password"
+        server: 
+          hostname: "server.example.com"

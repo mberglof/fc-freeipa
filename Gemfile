@@ -1,9 +1,11 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'rake'
-gem 'foodcritic'
-gem 'rubocop'
-gem 'berkshelf'
-gem 'chefspec'
-gem 'test-kitchen'
-gem 'kitchen-vagrant'
+gem "rake"
+gem "foodcritic"
+gem "rubocop"
+gem "berkshelf"
+gem "chefspec"
+gem "chef-dk"
+gem "test-kitchen"
+gem "kitchen-vagrant"
+gem "pry"
